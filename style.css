@@ -375,16 +375,27 @@ img { max-width: 100%; display: block; }
 }
 
 .card__img {
-  height: 140px; border-radius: var(--radius-sm);
-  background: linear-gradient(135deg,
-    color-mix(in srgb, var(--primary) 12%, var(--bg-alt)),
-    color-mix(in srgb, var(--accent) 12%, var(--bg-alt)));
-  display: grid; place-items: center;
-  font-size: 2.4rem; margin-bottom: 16px;
-  overflow: hidden;
+height: 220px; /* Делаем картинку выше /
+background: #e2e8f0;
+display: flex;
+justify-content: center;
+align-items: center;
+overflow: hidden;
+border-radius: 16px 16px 0 0; / Скругляем только верхние углы */
+position: relative;
 }
-.card__img img { width: 100%; height: 100%; object-fit: cover; }
 
+.card__img img {
+width: 100%;
+height: 100%;
+object-fit: cover; /* Картинка заполнит весь блок без искажений /
+transition: transform 0.4s ease; / Плавная анимация */
+}
+
+/* Эффект увеличения фото при наведении мышки на карточку */
+.card:hover .card__img img {
+transform: scale(1.08);
+}
 .card h3 {
   font-size: 1.1rem; font-weight: 800;
   margin-bottom: 8px; color: var(--text);
