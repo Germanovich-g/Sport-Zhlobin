@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Жлобин — кузница спортивных рекордов</title>
+  <meta name="description" content="Яркая интерактивная карта спортивных объектов, спортсменов и событий Жлобина.">
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ===== Фон-градиент ===== -->
+  <div class="bg-glow" aria-hidden="true"></div>
+
+  <!-- ===== Шапка ===== -->
+  <header class="header">
+    <div class="container header__inner">
+      <a href="#top" class="logo">
+        <span class="logo__badge">🏅</span>
+        <span>Жлобин<b>·</b>Спорт</span>
+      </a>
+
+      <nav class="nav" id="nav">
+        <a href="#map">Карта</a>
+        <a href="#objects">Объекты</a>
+        <a href="#people">Спортсмены</a>
+        <a href="#events">События</a>
+        <a href="#about">О проекте</a>
+      </nav>
+
+      <div class="header__tools">
+        <button class="icon-btn" id="themeToggle" aria-label="Сменить тему" title="Светлая / тёмная тема">🌙</button>
+        <button class="burger" id="burger" aria-label="Меню" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== Герой ===== -->
+  <section class="hero" id="top">
+    <div class="hero__blob hero__blob--1" aria-hidden="true"></div>
+    <div class="hero__blob hero__blob--2" aria-hidden="true"></div>
+    <div class="hero__blob hero__blob--3" aria-hidden="true"></div>
+
+    <div class="container hero__inner">
+      <div class="hero__text">
+        <span class="hero__pill">🚀 Интерактивный краеведческий проект</span>
+        <h1 class="hero__title">
+          Жлобин —<br>
+          <span class="gradient-text">кузница спортивных рекордов</span>
+        </h1>
+        <p class="hero__lead">
+          Арены, олимпийские чемпионы и крупные турниры города — на одной
+          живой карте. Нажимай на метки, узнавай истории.
+        </p>
+        <div class="hero__actions">
+          <a href="#map" class="btn btn--primary btn--glow">Открыть карту →</a>
+          <a href="#people" class="btn btn--ghost">Спортсмены</a>
+        </div>
+      </div>
+
+      <div class="hero__stats">
+        <div class="stat">
+          <span class="stat__num" data-count="6">0</span>
+          <span class="stat__label">объектов</span>
+        </div>
+        <div class="stat">
+          <span class="stat__num" data-count="8">0</span>
+          <span class="stat__label">легенд и команд</span>
+        </div>
+        <div class="stat">
+          <span class="stat__num" data-count="3">0</span>
+          <span class="stat__label">турнира</span>
+        </div>
+      </div>
+    </div>
+
+    <a href="#map" class="scroll-hint" aria-label="Вниз">↓</a>
+  </section>
+
+  <!-- ===== Карта ===== -->
+  <section class="section" id="map">
+    <div class="container">
+      <div class="section__head reveal">
+        <span class="section__tag">🗺️ Слой за слоем</span>
+        <h2 class="section__title">Карта города</h2>
+        <p class="section__sub">Фильтруй по слоям или ищи по названию — карта подсветит нужные точки.</p>
+      </div>
+
+      <div class="map-toolbar reveal">
+        <div class="search">
+          <span class="search__icon">🔍</span>
+          <input type="search" id="searchInput" placeholder="Поиск: объект, адрес, событие...">
+        </div>
+        <div class="filters" role="group" aria-label="Слои карты">
+          <button class="chip is-active" data-layer="all">✨ Все</button>
+          <button class="chip chip--objects" data-layer="objects">🏟️ Объекты</button>
+          <button class="chip chip--people" data-layer="people">🏆 Спортсмены</button>
+          <button class="chip chip--events" data-layer="events">🎉 События</button>
+        </div>
+      </div>
+
+      <div id="mapContainer" class="map-container reveal"></div>
+
+      <p class="map__hint reveal" id="resultHint">Показано точек: <strong>17</strong> из 17</p>
+      <p class="map__hint map__hint--soft">💡 Клик по метке — карточка с описанием.</p>
+    </div>
+  </section>
+
+  <!-- ===== Объекты ===== -->
+  <section class="section section--alt" id="objects">
+    <div class="container">
+      <div class="section__head reveal">
+        <span class="section__tag section__tag--objects">🏟️ Слой 1</span>
+        <h2 class="section__title">Спортивные объекты</h2>
+        <p class="section__sub">Точки притяжения: арены, бассейн, трасса, стадион.</p>
+      </div>
+      <div class="cards" id="objectsList"></div>
+    </div>
+  </section>
+
+  <!-- ===== Спортсмены ===== -->
+  <section class="section" id="people">
+    <div class="container">
+      <div class="section__head reveal">
+        <span class="section__tag section__tag--people">🏆 Слой 2</span>
+        <h2 class="section__title">Гордость Жлобина</h2>
+        <p class="section__sub">Олимпийские легенды, воспитанники ЦОР, команды-символы.</p>
+      </div>
+      <div class="cards" id="peopleList"></div>
+    </div>
+  </section>
+
+  <!-- ===== События ===== -->
+  <section class="section section--alt" id="events">
+    <div class="container">
+      <div class="section__head reveal">
+        <span class="section__tag section__tag--events">🎉 Слой 3</span>
+        <h2 class="section__title">События и история</h2>
+        <p class="section__sub">Крупные турниры, которые принимал город.</p>
+      </div>
+      <div class="cards" id="eventsList"></div>
+    </div>
+  </section>
+
+  <!-- ===== О проекте ===== -->
+  <section class="section" id="about">
+    <div class="container">
+      <div class="section__head reveal">
+        <span class="section__tag">📖 О проекте</span>
+        <h2 class="section__title">Зачем это всё</h2>
+      </div>
+      <div class="about-grid reveal">
+        <div class="about-card">
+          <h3>🎯 Цель</h3>
+          <p>Собрать в одном месте спортивную историю Жлобина — от арен до олимпийских чемпионов.</p>
+        </div>
+        <div class="about-card">
+          <h3>👥 Для кого</h3>
+          <p>Для школьников, учителей физкультуры, краеведов и всех, кто любит спорт и свой город.</p>
+        </div>
+        <div class="about-card">
+          <h3>🏆 Номинация</h3>
+          <p>Проект подходит для конкурса «Динамическая карта» и школьных краеведческих работ.</p>
+        </div>
+      </div>
+
+      <div class="sources reveal">
+        <h3>📚 Источники</h3>
+        <ul>
+          <li>Данные о спорткомплексе на ул. Карла Маркса, 3/1</li>
+          <li>Материалы о ХК «Металлург-Жлобин» и ВК «Искра»</li>
+          <li>Сведения о II Играх стран СНГ, турнире Шоты Нармания, Спартакиаде Союзного государства</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <p>© 2026 «Жлобин — кузница спортивных рекордов»</p>
+      <a href="#top" class="footer__up">↑ Наверх</a>
+    </div>
+  </footer>
+
+  <!-- ===== Модалка ===== -->
+  <div class="modal" id="modal" aria-hidden="true">
+    <div class="modal__backdrop" data-close></div>
+    <div class="modal__box" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button class="modal__close" data-close aria-label="Закрыть">✕</button>
+      <div class="modal__photo" id="modalPhoto"></div>
+      <span class="modal__badge" id="modalBadge"></span>
+      <h3 id="modalTitle"></h3>
+      <p id="modalText"></p>
+      <p class="modal__meta" id="modalMeta"></p>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+          integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script src="script.js"></script>
+</body>
+</html>
