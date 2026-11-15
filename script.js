@@ -205,7 +205,7 @@ const img = item.photo
 // Добавляем специальный класс для спортсменов, чтобы фотография выравнивалась по лицу
 const imgClass = item.layer === 'people' ? 'card__img card__img--people' : 'card__img';
 return `
-<div class="{imgClass}">{img}</div> 
+<div class="${imgClass}">${img}</div> 
 <div class="card-content"> 
    <h3>${item.title}</h3> 
    <p>${item.text}</p> 
