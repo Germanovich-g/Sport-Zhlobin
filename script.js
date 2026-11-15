@@ -199,14 +199,13 @@ document.addEventListener('keydown', e => {
    ============================================================ */
 
 function cardHTML(item) {
-  const img = item.photo
-    ? `<img src="${item.photo}" alt="">`
-    : LAYER_EMOJI[item.layer];
-  return `
-    <div class="card__img">${img}</div>
-    <h3>${item.title}</h3>
-    <p>${item.text}</p>
-    <p class="card__meta">📍 ${item.address}</p>`;
+const img = item.photo
+? <img src="${item.photo}" alt="${item.title}">
+: LAYER_EMOJI[item.layer];
+// Добавляем специальный класс для спортсменов, чтобы фотография выравнивалась по лицу
+const imgClass = item.layer === 'people' ? 'card__img card__img--people' : 'card__img';
+return  <div class="{imgClass}">{img}</div> <div class="card-content"> 
+   <h3>${item.title}</h3> <p>${item.text}</p> <p class="card__meta">📍 ${item.address}</p> </div>;
 }
 
 function renderCards(layer, containerId) {
